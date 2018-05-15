@@ -18,9 +18,13 @@ xt8088 = Microcontrolador {
                    errror = ""
                    }
 
+-- Definicion de un nuevo tipo para dejarme de joder
+
+type Instruccion = Microcontrolador -> Microcontrolador
+
 -- Punto 2.1, desarrollo instruccion NOP
 
-nop::Microcontrolador->Microcontrolador
+nop::Instruccion
 nop microcontrolador = microcontrolador {
                                     programCounter = programCounter microcontrolador + 1
                                 }
@@ -30,20 +34,20 @@ nop microcontrolador = microcontrolador {
 
 -- Punto 3.1, funciones LODV, SWAP y ADD
 
-lodv::Int->Microcontrolador
+lodv::Int->Instruccion
 lodv val microcontrolador = microcontrolador {
                                     acumuladorA = val
                                 }
 
-swap::Microcontrolador->Microcontrolador
+swap::Instruccion
 swap microcontrolador = microcontrolador {
                                     acumuladorA = acumuladorB microcontrolador,
-                                    acumuladoraB = acumuladorA microcontrolador,
+                                    acumuladorB = acumuladorA microcontrolador
                                 }
 
-add::Microcontrolador->Microcontrolador
+add::Instruccion
 add microcontrolador = microcontrolador {
-                                    acumuladorA = microcontrolador acumuladorA + microcontrolador acumuladorB,
+                                    acumuladorA = acumuladorA microcontrolador + acumuladorB microcontrolador,
                                     acumuladorB = 0
                                 }
 
